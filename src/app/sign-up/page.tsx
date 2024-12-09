@@ -49,22 +49,22 @@ export default function SignUp() {
         return toast.error(result.error.errors[0].message);
       }
 
-      // const res = await axios.post("/api/v1/users", {
-      //   username,
-      //   password,
-      // });
-      // const { data } = res;
-      // console.log(data);
-      const res = await axios.get('/api/v1/users');
+      const res = await axios.post("/api/v1/users", {
+        username,
+        password,
+      });
       const { data } = res;
-      console.log(data);
+      if (data.status !== 200) {
+        throw new Error(data.message);
+      }
 
-
-      toast.success("สมัครสมาชิกสำเร็จ");
+      toast.success(data.message);
       router.push("/sign-in");
     } catch (err) {
-      console.error("Error when sign up:", err);
-      toast.error("เกิดข้อผิดพลาดระหว่างการสมัครสมาชิก");
+      console.error(err);
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     }
   };
 

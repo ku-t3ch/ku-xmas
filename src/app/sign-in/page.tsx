@@ -15,6 +15,14 @@ import { useState } from "react";
 import Particles from "@/components/ui/particles";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { z } from "zod";
+import axios from "axios";
+
+const user = z.object({
+  username: z.string().min(1, { message: "ความยาวชื่อผู้ใช้งานขั้นต่ำ 1 ตัวอักษร"}).trim(),
+  password: z.string().min(4, { message: "ความยาวรหัสผ่านขั้นต่ำ 4 ตัวอักษร"}).trim(),
+});
 
 export default function SignIn() {
   const router = useRouter();
@@ -22,9 +30,37 @@ export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmit = async () => {
-    console.log(username, password);
-    router.push('/home')
+  const onSignIn = async () => {
+    try {
+      if (
+        !username ||
+        !password
+      ) {
+        return toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
+      }
+
+      const result = user.safeParse({ username, password });
+      if (!result.success) {
+        return toast.error(result.error.errors[0].message);
+      }
+
+      const res = await axios.post("/api/v1/login", {
+        username,
+        password,
+      });
+      const { data } = res;
+      if (data.status !== 200) {
+        throw new Error()
+      }
+
+      toast.success("เข้าสู่ระบบสำเร็จ");
+      router.push("/home");
+    } catch (err) {
+      console.error(err);
+      if (err instanceof Error) {
+        toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
+      }
+    }
   };
 
   return (
@@ -64,7 +100,7 @@ export default function SignIn() {
           <div className="flex flex-col w-full">
             <Button
               className="w-full bg-green-600 hover:bg-green-700 transition-all"
-              onClick={onSubmit}
+              onClick={onSignIn}
             >
               เข้าสู่ระบบ
             </Button>
