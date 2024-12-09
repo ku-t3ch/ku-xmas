@@ -28,12 +28,13 @@ export default function Background() {
 
   return (
     <div className="absolute inset-0 -z-10">
+      <div className="absolute bg-black w-full min-h-screen">
+      </div>
       <Image
         src={bgImage}
         fill
         alt="background"
-        className="object-cover opacity-70"
-     
+        className="object-cover opacity-40"
       />
     </div>
   );

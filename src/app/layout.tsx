@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Noto_Sans_Thai } from "next/font/google"
+import { Noto_Sans_Thai } from "next/font/google";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,7 +16,7 @@ const geistMono = localFont({
 });
 const notoSansThai = Noto_Sans_Thai({
   subsets: ["thai"],
-  display: "swap"
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${notoSansThai.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster richColors position="top-center" />
         {children}
       </body>
     </html>
