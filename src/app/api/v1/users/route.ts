@@ -3,8 +3,8 @@ import { pb } from "../pocketbase";
 
 export async function POST(req: Request) {
     try {
-        const res = await req.json();
-        const { username, password } = res;
+        const body = await req.json();
+        const { username, password } = body;
 
         try {
             const _ = await pb.collection('people').getFirstListItem(`username="${username}"`);
