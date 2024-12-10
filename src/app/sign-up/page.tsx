@@ -23,7 +23,7 @@ import axios from "axios"
 const user = z.object({
   username: z.string().min(1, { message: "ความยาวชื่อผู้ใช้งานขั้นต่ำ 1 ตัวอักษร"}).trim(),
   password: z.string().min(4, { message: "ความยาวรหัสผ่านขั้นต่ำ 4 ตัวอักษร"}).trim(),
-  confirmPassword: z.string().min(4, { message: "คความยาวรหัสผ่านขั้นต่ำ 4 ตัวอักษร" }).trim(),
+  confirmPassword: z.string().min(4, { message: "ความยาวรหัสผ่านขั้นต่ำ 4 ตัวอักษร" }).trim(),
 });
 
 export default function SignUp() {
