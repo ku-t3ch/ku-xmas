@@ -1,118 +1,136 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Logo from "@/components/logo";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import Particles from "@/components/ui/particles";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { z } from "zod";
 import axios from "axios";
 
-const user = z.object({
-  username: z.string().min(1, { message: "ความยาวชื่อผู้ใช้งานขั้นต่ำ 1 ตัวอักษร"}).trim(),
-  password: z.string().min(4, { message: "ความยาวรหัสผ่านขั้นต่ำ 4 ตัวอักษร"}).trim(),
-});
+import Logo from "@/components/logo";
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Particles from "@/components/ui/particles";
+
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import {
+	Form,
+	FormControl,
+	// FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { signInFormSchema } from "@/lib/schema";
 
 export default function SignIn() {
-  const router = useRouter();
+	const router = useRouter();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+	const form = useForm<z.infer<typeof signInFormSchema>>({
+		defaultValues: {
+			username: "",
+			password: "",
+		},
+		resolver: zodResolver(signInFormSchema),
+	});
 
-  const onSignIn = async () => {
-    try {
-      if (
-        !username ||
-        !password
-      ) {
-        return toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
-      }
+	const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
+		try {
+			const res = await axios.post("/api/v1/login", values);
+			const { data } = res;
+			if (data.status !== 200) {
+				throw new Error();
+			}
 
-      const result = user.safeParse({ username, password });
-      if (!result.success) {
-        return toast.error(result.error.errors[0].message);
-      }
+			toast.success("เข้าสู่ระบบสำเร็จ");
+			router.push("/home");
+		} catch (err) {
+			console.error(err);
+			if (err instanceof Error) {
+				toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
+			}
+		}
+	};
 
-      const res = await axios.post("/api/v1/login", {
-        username,
-        password,
-      });
-      const { data } = res;
-      if (data.status !== 200) {
-        throw new Error()
-      }
-
-      toast.success("เข้าสู่ระบบสำเร็จ");
-      router.push("/home");
-    } catch (err) {
-      console.error(err);
-      if (err instanceof Error) {
-        toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
-      }
-    }
-  };
-
-  return (
-    <main className="flex flex-col w-full justify-center items-center min-h-screen bg-neutral-900">
-      {/* <Background /> */}
-      <Particles
-        className="absolute inset-0"
-        quantity={200}
-        ease={80}
-        color={"#ffffff"}
-        refresh
-      />
-      <Card className="relative overflow-hidden border-0 min-w-[350px]">
-        <CardHeader>
-          <div className="inline-flex justify-center items-center">
-            <Logo />
-          </div>
-          <CardTitle className="w-full inline-flex justify-center font-bold text-2xl">
-            เข้าสู่ระบบ
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <Label className="font-bold">ชื่อผู้ใช้งาน</Label>
-          <Input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Label className="font-bold">รหัสผ่าน</Label>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </CardContent>
-        <CardFooter>
-          <div className="flex flex-col w-full">
-            <Button
-              className="w-full bg-green-600 hover:bg-green-700 transition-all"
-              onClick={onSignIn}
-            >
-              เข้าสู่ระบบ
-            </Button>
-            <div className="inline-flex items-center justify-center w-full mt-8 gap-2">
-              <h3>ยังไม่มีบัญชี ? </h3>
-              <Link href={"/sign-up"} className="underline">
-                สมัครสมาชิก
-              </Link>
-            </div>
-          </div>
-        </CardFooter>
-      </Card>
-    </main>
-  );
+	return (
+		<main className="flex flex-col w-full justify-center items-center min-h-screen bg-gradient-to-b from-blue-900 to-black">
+			<Particles
+				className="absolute inset-0"
+				quantity={200}
+				ease={80}
+				color={"#ffffff"}
+				refresh
+			/>
+			<Card className="relative overflow-hidden border-0 min-w-[350px]">
+				<CardHeader>
+					<div className="inline-flex justify-center items-center">
+						<Logo />
+					</div>
+					<CardTitle className="w-full inline-flex justify-center font-bold text-2xl">
+						เข้าสู่ระบบ
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-4">
+					<Form {...form}>
+						<form
+							onSubmit={form.handleSubmit(onSubmit)}
+							className="space-y-4"
+						>
+							<FormField
+								control={form.control}
+								name="username"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>ชื่อผู้ใช้งาน</FormLabel>
+										<FormControl>
+											<Input {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="password"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>รหัสผ่าน</FormLabel>
+										<FormControl>
+											<Input type="password" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<Button
+								className="w-full bg-green-600 hover:bg-green-700 transition-all"
+								type="submit"
+							>
+								เข้าสู่ระบบ
+							</Button>
+						</form>
+					</Form>
+				</CardContent>
+				<CardFooter>
+					<div className="flex flex-col w-full">
+						<div className="inline-flex items-center justify-center w-full mt-8 gap-2">
+							<h3>ยังไม่มีบัญชี ? </h3>
+							<Link href={"/sign-up"} className="underline">
+								สมัครสมาชิก
+							</Link>
+						</div>
+					</div>
+				</CardFooter>
+			</Card>
+		</main>
+	);
 }
