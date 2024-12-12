@@ -42,25 +42,21 @@ export default function SignUp() {
 	});
 
 	const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
-		try {
-			const res = await axios.post("/api/v1/users", values);
-			const { data } = res;
-			if (data.status !== 200) {
-				throw new Error(data.message);
-			}
-
-			toast.success(data.message);
-			router.push("/sign-in");
-		} catch (err) {
-			console.error(err);
-			if (err instanceof Error) {
-				toast.error(err.message);
-			}
-		}
+		const req = axios.post("/api/v1/users", values);
+		toast.promise(req, {
+			loading: "กำลังสมัครสมาชิก",
+			error: (err) =>
+				err.response.data.error ??
+				"เกิดข้อผิดพลาดระหว่างการสมัครสมาชิก",
+			success: () => {
+				router.push("/sign-in");
+				return "สร้างผู้ใช้งานใหม่สำเร็จ";
+			},
+		});
 	};
 
 	return (
-		<main className="flex flex-col w-full justify-center items-center min-h-screen bg-gradient-to-b from-blue-900 to-black">
+		<main className="flex flex-col w-full justify-center items-center min-h-screen h-full bg-gradient-to-b from-blue-900 to-black">
 			<motion.div>
 				<Particles
 					className="absolute inset-0"

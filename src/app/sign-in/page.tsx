@@ -24,7 +24,6 @@ import { useForm } from "react-hook-form";
 import {
 	Form,
 	FormControl,
-	// FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -44,25 +43,20 @@ export default function SignIn() {
 	});
 
 	const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
-		try {
-			const res = await axios.post("/api/v1/login", values);
-			const { data } = res;
-			if (data.status !== 200) {
-				throw new Error();
-			}
-
-			toast.success("เข้าสู่ระบบสำเร็จ");
-			router.push("/home");
-		} catch (err) {
-			console.error(err);
-			if (err instanceof Error) {
-				toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
-			}
-		}
+		const req = axios.post("/api/v1/login", values);
+		toast.promise(req, {
+			loading: "กำลังเข้าสู่่ระบบ",
+			error: (err) =>
+				err.response.data.error ?? "เกิดข้อผิดพลาดในการเข้าสู่ระบบ",
+			success: () => {
+				router.push("/home");
+				return "เข้าสู่ระบบสำเร็จ";
+			},
+		});
 	};
 
 	return (
-		<main className="flex flex-col w-full justify-center items-center min-h-screen bg-gradient-to-b from-blue-900 to-black">
+		<main className="flex flex-col w-full justify-center items-center min-h-screen h-full bg-gradient-to-b from-blue-900 to-black">
 			<Particles
 				className="absolute inset-0"
 				quantity={200}
