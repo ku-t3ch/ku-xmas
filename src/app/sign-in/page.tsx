@@ -24,7 +24,6 @@ import { useForm } from "react-hook-form";
 import {
 	Form,
 	FormControl,
-	// FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -44,20 +43,16 @@ export default function SignIn() {
 	});
 
 	const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
-		try {
-			const res = await axios.post("/api/v1/login", values);
-			if (res.status !== 200) {
-				throw new Error();
-			}
-			const { data } = res;
-			console.log(data);
-
-			toast.success("เข้าสู่ระบบสำเร็จ");
-			router.push("/home");
-		} catch (err) {
-			console.error(err);
-			toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง")
-		}
+		const req = axios.post("/api/v1/login", values);
+		toast.promise(req, {
+			loading: "กำลังเข้าสู่่ระบบ",
+			error: (err) =>
+				err.response.data.error ?? "เกิดข้อผิดพลาดในการเข้าสู่ระบบ",
+			success: () => {
+				router.push("/home");
+				return "เข้าสู่ระบบสำเร็จ";
+			},
+		});
 	};
 
 	return (

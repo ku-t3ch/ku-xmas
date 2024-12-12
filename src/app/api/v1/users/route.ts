@@ -1,33 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import bcrypt from "bcrypt"
-import { pb } from "../pocketbase";
+import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../../../prisma/prismaProvider";
+import { generateId } from "lucia";
+import { signUpFormSchema } from "@/lib/schema";
 
 export async function POST(req: NextRequest) {
 	try {
+		//const body = await req.json();
+		//const { username, password } = body;
 		const body = await req.json();
-		const { username, password } = body;
+		const userData = signUpFormSchema.safeParse(body);
+		if (!userData.success) {
+			throw new Error();
+		}
+		const { username, password } = userData.data;
 
 		try {
-			await pb
-				.collection("people")
-				.getFirstListItem(`username="${username}"`);
+			const user = await prisma.user.findFirst({
+				where: {
+					username,
+				},
+			});
+			if (!user) throw new Error();
+
 			return NextResponse.json(
-				{ message: "มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว" },
+				{ error: "มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว" },
 				{ status: 400 }
 			);
 		} catch (_) {}
 
 		const hashedPassword = await bcrypt.hash(password, 10);
-		// const hashedPassword = await Bun.password.hash(password, {
-		// 	algorithm: "bcrypt",
-		// 	cost: 10,
-		// });
-		const data = {
-			username,
-			password: hashedPassword,
-		};
-		await pb.collection("people").create(data);
+		await prisma.user.create({
+			data: {
+				id: generateId(16),
+				username,
+				password: hashedPassword,
+			},
+		});
 
 		return NextResponse.json({ message: "สมัครสมาชิกสำเร็จ" });
 	} catch (err) {

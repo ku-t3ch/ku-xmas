@@ -42,21 +42,17 @@ export default function SignUp() {
 	});
 
 	const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
-		try {
-			const res = await axios.post("/api/v1/users", values);
-			if (res.status !== 200) {
-				throw new Error(res.data.error);
-			}
-			const { data } = res;
-
-			toast.success(data.message);
-			router.push("/sign-in");
-		} catch (err) {
-			console.error(err);
-			if (err instanceof Error) {
-				toast.error(err.message);
-			}
-		}
+		const req = axios.post("/api/v1/users", values);
+		toast.promise(req, {
+			loading: "กำลังสมัครสมาชิก",
+			error: (err) =>
+				err.response.data.error ??
+				"เกิดข้อผิดพลาดระหว่างการสมัครสมาชิก",
+			success: () => {
+				router.push("/sign-in");
+				return "สร้างผู้ใช้งานใหม่สำเร็จ";
+			},
+		});
 	};
 
 	return (
