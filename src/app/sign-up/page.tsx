@@ -44,10 +44,10 @@ export default function SignUp() {
 	const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
 		try {
 			const res = await axios.post("/api/v1/users", values);
-			const { data } = res;
-			if (data.status !== 200) {
-				throw new Error(data.message);
+			if (res.status !== 200) {
+				throw new Error(res.data.error);
 			}
+			const { data } = res;
 
 			toast.success(data.message);
 			router.push("/sign-in");

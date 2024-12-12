@@ -46,18 +46,17 @@ export default function SignIn() {
 	const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
 		try {
 			const res = await axios.post("/api/v1/login", values);
-			const { data } = res;
-			if (data.status !== 200) {
+			if (res.status !== 200) {
 				throw new Error();
 			}
+			const { data } = res;
+			console.log(data);
 
 			toast.success("เข้าสู่ระบบสำเร็จ");
 			router.push("/home");
 		} catch (err) {
 			console.error(err);
-			if (err instanceof Error) {
-				toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
-			}
+			toast.error("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง")
 		}
 	};
 
