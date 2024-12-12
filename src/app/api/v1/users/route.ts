@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import bcrypt from "bcrypt"
 import { pb } from "../pocketbase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -17,11 +18,11 @@ export async function POST(req: NextRequest) {
 			);
 		} catch (_) {}
 
-		// const hashedPassword = await bcrypt.hash(password, 10);
-		const hashedPassword = await Bun.password.hash(password, {
-			algorithm: "bcrypt",
-			cost: 10,
-		});
+		const hashedPassword = await bcrypt.hash(password, 10);
+		// const hashedPassword = await Bun.password.hash(password, {
+		// 	algorithm: "bcrypt",
+		// 	cost: 10,
+		// });
 		const data = {
 			username,
 			password: hashedPassword,

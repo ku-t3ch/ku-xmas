@@ -1,5 +1,6 @@
 import { pb } from "../pocketbase";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt"
 
 export async function POST(req: NextRequest) {
     try {
@@ -8,8 +9,8 @@ export async function POST(req: NextRequest) {
 
         try {
             const userRecord = await pb.collection("people").getFirstListItem(`username="${username}"`);
-            const result = await Bun.password.verify(password, userRecord.password);
-            // const result = await bcrypt.compare(password, userRecord.password);
+            // const result = await Bun.password.verify(password, userRecord.password);
+            const result = await bcrypt.compare(password, userRecord.password);
             
             if (!result) {
                 throw new Error();
