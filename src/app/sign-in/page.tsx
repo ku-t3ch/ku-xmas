@@ -56,7 +56,7 @@ export default function SignIn() {
 	};
 
 	return (
-		<main className="flex flex-col w-full justify-center items-center min-h-screen bg-gradient-to-b from-blue-900 to-black">
+		<main className="flex flex-col w-full justify-center items-center min-h-screen h-full bg-gradient-to-b from-blue-900 to-black">
 			<Particles
 				className="absolute inset-0"
 				quantity={200}
