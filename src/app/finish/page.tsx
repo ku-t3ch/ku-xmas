@@ -15,12 +15,13 @@ const finish = () => {
         color={"#ffffff"}
         refresh
       />
-      <Logo />
-      <Card className="relative overflow-hidden border-0 min-w-[350px]">
+
+      <Card className="relative overflow-hidden border-0 w-[330px] lg:w-[500px] ">
         <CardHeader>
-          <CardTitle className=" w-72 inline-flex font-bold text-xl text-center">
-            ต้นไม้ของคุณ,ฟหกฟหกฟหกฟกหฟsdasdsadsadasasd
+          <CardTitle className="flex justify-center items-center font-bold text-xl w-full max-w-full break-words text-center">
+            ต้นไม้ของคุณ,ฟqwewqeasdasdassdasdaฟหก
           </CardTitle>
+
           <div className="inline-flex justify-center items-center">
             <Christmas />
           </div>
