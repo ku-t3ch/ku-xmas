@@ -22,7 +22,7 @@ const SnowfallBackground = () => {
           className="absolute -top-2 rounded-full bg-white"
           style={{ width: size, height: size, left: `${startX}%` }}
           animate={{
-            y: "100vh",
+            y: "105vh",
             x: ["0px", "10px", "-10px", "0px"],
           }}
           transition={{

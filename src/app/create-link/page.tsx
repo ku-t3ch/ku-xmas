@@ -58,7 +58,7 @@ export default function CreateLink() {
         if (!userId) throw new Error();
 
         const resUpdateUser = await axios.patch(`/api/v1/users/${userId}`, {
-          publicLink: crypto.randomUUID(),
+          publicLink: `${userId}/${crypto.randomUUID()}`,
         });
         const { publicLink } = resUpdateUser.data;
 

@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
 		return NextResponse.json({ message: "สมัครสมาชิกสำเร็จ" });
 	} catch (err) {
-		console.error("path: /users method: post error:" ,err);
+		console.error("path: /users method: post error:", err);
 		return NextResponse.json({}, { status: 500 });
 	}
 }
