@@ -56,8 +56,9 @@ export default function SignIn() {
   };
 
   return (
-    <SnowfallBackground>
-      <Card className="relative overflow-hidden border-0 min-w-[350px]">
+    <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black">
+      <SnowfallBackground />
+      <Card className="absolute border-0 min-w-[350px]">
         <CardHeader>
           <div className="inline-flex justify-center items-center">
             <Logo />
@@ -115,6 +116,6 @@ export default function SignIn() {
           </div>
         </CardFooter>
       </Card>
-    </SnowfallBackground>
+    </div>
   );
 }

@@ -54,7 +54,8 @@ export default function SignUp() {
   };
 
   return (
-    <SnowfallBackground>
+    <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black">
+      <SnowfallBackground />
       <Card className="relative overflow-hidden border-0 min-w-[350px]">
         <CardHeader>
           <div className="inline-flex justify-center items-center">
@@ -126,6 +127,6 @@ export default function SignUp() {
           </div>
         </CardFooter>
       </Card>
-    </SnowfallBackground>
+    </div>
   );
 }
