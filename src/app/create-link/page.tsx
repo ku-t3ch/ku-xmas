@@ -3,7 +3,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,18 +12,35 @@ import SnowfallBackground from "@/components/snowFallBackground";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/logo";
-import Image from "next/image";
 import { motion } from "motion/react";
-import { FaChevronLeft, FaCheck } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import { FiCopy } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 export default function CreateLink() {
+  const router = useRouter();
+
+  const [userId, setUserId] = useState<string | null>(null);
   const [currentLink, setCurrentLink] = useState("");
   const [isCopied, setIsCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleCopy = () => {
     if (currentLink === "") {
@@ -36,6 +52,55 @@ export default function CreateLink() {
     setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
   };
 
+  const createNewLink = () => {
+    const process = async () => {
+      try {
+        if (!userId) throw new Error();
+
+        const resUpdateUser = await axios.patch(`/api/v1/users/${userId}`, {
+          publicLink: crypto.randomUUID(),
+        });
+        const { publicLink } = resUpdateUser.data;
+
+        if (!publicLink) throw new Error();
+
+        setCurrentLink(publicLink);
+      } catch (err) {
+        console.error(err);
+        if (err instanceof AxiosError) {
+          return err.response?.data.error;
+        }
+        return err;
+      }
+    };
+    toast.promise(process, {
+      loading: "กำลังสร้างลิงก์",
+      error: (err) =>
+        err.response.data.error ?? "เกิดข้อผิดพลาดในการสร้างลิงก์",
+      success: () => "สร้างลิงก์สำเร็จ",
+    });
+  };
+
+  useEffect(() => {
+    const initUserInfo = async () => {
+      setLoading(true);
+      try {
+        const resAuth = await axios.get("/api/v1/auth");
+        const { userId } = resAuth.data;
+        setUserId(userId);
+
+        const resUserData = await axios.get(`/api/v1/users/${userId}`);
+        const { user } = resUserData.data; // user info
+
+        setCurrentLink(user.publicLink ?? "");
+      } catch (err) {
+        console.error(err);
+      }
+      setLoading(false);
+    };
+    initUserInfo();
+  }, [router]);
+
   return (
     <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
       <SnowfallBackground />
@@ -45,7 +110,7 @@ export default function CreateLink() {
             <Logo />
           </div>
           <CardTitle className="w-full inline-flex justify-center items-center space-x-4 text-2xl font-bold">
-            มาสร้างเส้นทางมอบคำอวยพรให้คุณกัน
+            มาสร้างเส้นทางมอบคำอวยพรให้คุณกัน ⭐
           </CardTitle>
         </CardHeader>
         <CardContent className="w-full flex flex-col items-center justify-center space-y-4">
@@ -53,29 +118,21 @@ export default function CreateLink() {
           <div className="w-full flex space-x-2">
             <Input
               className="w-full truncate"
-              value={currentLink ? currentLink : "ยังไม่ได้สร้าง"}
-              disabled
+              value={
+                currentLink
+                  ? currentLink
+                  : loading
+                  ? "กำลังโหลดข้อมูล"
+                  : "ยังไม่ได้สร้าง"
+              }
+              readOnly
             />
-            {/* <motion.button
-              className="mt-8 flex items-center px-6 py-3 bg-black text-white rounded-full shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleCopy}
-            >
-              {isCopied ? (
-                <>
-                  <HiOutlineArrowRight className="mr-2 text-xl" />
-                  คัดลอกลิงก์แล้ว
-                </>
-              ) : (
-                <>
-                  <HiOutlineClipboard className="mr-2 text-xl" />
-                  คัดลอกลิงก์
-                </>
-              )}
-            </motion.button> */}
             <motion.div whileTap={{ scale: 0.9 }}>
-              <Button variant={"outline"} onClick={handleCopy}>
+              <Button
+                variant={"outline"}
+                onClick={handleCopy}
+                disabled={loading}
+              >
                 {isCopied ? (
                   <div className="inline-flex items-center space-x-2">
                     <FaCheck />
@@ -90,37 +147,38 @@ export default function CreateLink() {
               </Button>
             </motion.div>
           </div>
-          {/* <motion.div
-            className="relative w-14 h-14 bg-white rounded-lg p-4"
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{
-              scale: [1, 1.05, 1],
-              y: [20, 10, 20],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "easeInOut",
-            }}
-          >
-            <Image
-              src={"/image/christmas-card.png"}
-              alt="Christmas Card"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
-            />
-          </motion.div> */}
         </CardContent>
         <CardContent className="flex flex-col items-center justify-center w-full space-y-2"></CardContent>
         <CardFooter className="flex justify-end space-x-2 mt-6">
           <Link href={"/home"}>
             <Button variant={"outline"}>กลับหน้าหลัก</Button>
           </Link>
-          <Button>
-            {currentLink === "" ? "สร้างลิงก์" : "สร้างลิงก์ใหม่"}
-          </Button>
+          {currentLink === "" ? (
+            <Button disabled={loading || !userId} onClick={createNewLink}>
+              สร้างลิงก์ใหม่
+            </Button>
+          ) : (
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button disabled={loading || !userId}>สร้างลิงก์ใหม่</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>โปรดระวัง !</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    หากคุณยืนยันการสร้างลิงก์ใหม่จะส่งผลให้ลิงก์ปัจจุบันที่ใช้งานอยู่นั้นไม่สามารถเข้าถึงได้อีกต่อไป
+                    โปรดตรวจสอบให้เรียบร้อยก่อนการยืนยัน
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                  <AlertDialogAction onClick={createNewLink}>
+                    ยืนยัน
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
         </CardFooter>
       </Card>
     </div>

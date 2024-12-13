@@ -1,5 +1,5 @@
 
-import getUser from "@/lib/session";
+import { getUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 import React from "react";
 

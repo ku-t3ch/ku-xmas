@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { lucia } from "./lucia";
 
-const getUser = async () => {
+export const getUser = async () => {
   const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null;
 
   if (!sessionId) return null;
@@ -36,4 +36,13 @@ const getUser = async () => {
   return null;
 };
 
-export default getUser;
+export const getUserId = async () => {
+  const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null;
+  if (!sessionId) return null;
+
+  const { user, session } = await lucia.validateSession(sessionId);
+
+  if (!user) return null;
+
+  return user.id;
+}
