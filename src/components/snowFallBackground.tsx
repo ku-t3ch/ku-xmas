@@ -19,7 +19,7 @@ const SnowfallBackground = () => {
       {snowflakes.map(({ id, size, startX, delay, duration }) => (
         <motion.div
           key={id}
-          className="absolute top-0 rounded-full bg-white"
+          className="absolute -top-2 rounded-full bg-white"
           style={{ width: size, height: size, left: `${startX}%` }}
           animate={{
             y: "100vh",
