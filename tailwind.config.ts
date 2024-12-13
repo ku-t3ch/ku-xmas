@@ -65,7 +65,8 @@ export default {
   			rainbow: 'rainbow var(--speed, 2s) infinite linear',
   			pulse: 'pulse var(--duration) ease-out infinite',
   			meteor: 'meteor 5s linear infinite',
-  			rippling: 'rippling var(--duration) ease-out'
+  			rippling: 'rippling var(--duration) ease-out',
+  			gradient: 'gradient 8s linear infinite'
   		},
   		keyframes: {
   			rainbow: {
@@ -104,6 +105,11 @@ export default {
   				'100%': {
   					transform: 'scale(2)',
   					opacity: '0'
+  				}
+  			},
+  			gradient: {
+  				to: {
+  					backgroundPosition: 'var(--bg-size) 0'
   				}
   			}
   		}
