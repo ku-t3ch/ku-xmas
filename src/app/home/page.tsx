@@ -18,7 +18,7 @@ import SnowfallBackground from "@/components/snowFallBackground";
 
 export default function Homepage() {
   return (
-    <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black">
+    <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
       <SnowfallBackground />
       <Card className="relative">
         <CardHeader>
@@ -57,7 +57,7 @@ export default function Homepage() {
           <CardDescription>เปิดกล่องของขวัญเพื่อดูคำอวยพร</CardDescription>
         </CardContent>
         <CardFooter className="flex justify-end space-x-2 mt-6">
-          <Link href={"/home/create-link"}>
+          <Link href={"/create-link"}>
             <Button>สร้างลิ้งค์ส่งคำอวยพร</Button>
           </Link>
         </CardFooter>

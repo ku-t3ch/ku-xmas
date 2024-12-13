@@ -30,5 +30,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/home/:path*"],
+	matcher: ["/home/:path*", "/create-link/:path*"],
 };

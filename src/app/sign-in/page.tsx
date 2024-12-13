@@ -56,7 +56,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black">
+    <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
       <SnowfallBackground />
       <Card className="absolute border-0 min-w-[350px]">
         <CardHeader>
