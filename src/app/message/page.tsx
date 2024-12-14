@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import axios from "axios";
-import { Loader2, RotateCcw } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -22,14 +22,6 @@ interface Message {
 	senderName: string;
 	message: string;
 	createdAt: Date;
-}
-
-function RangeList(start: number, stop: number) {
-	let temp = [];
-	for (let i = start; i < stop; i += 1) {
-		temp.push(i);
-	}
-	return temp;
 }
 
 export default function RenderMessage() {
@@ -87,7 +79,7 @@ export default function RenderMessage() {
 						<ScrollArea className="h-[400px] w-full rounded-md border">
 							<div className="w-full h-full flex flex-col gap-4 p-4">
 								{messages.map((message) => (
-									<Card>
+									<Card key={message.id}>
 										<CardHeader>
 											<CardTitle>
 												{message.senderName}

@@ -4,7 +4,7 @@ import prisma from "../../../../../../prisma/prismaProvider";
 
 export async function GET(
 	req: NextRequest,
-	{ params }: { params: { userId: string } }
+	{ params }: { params: Promise<{ userId: string }> }
 ) {
 	try {
 		const { userId } = await params;
@@ -32,7 +32,8 @@ export async function GET(
 // Update public link
 export async function PATCH(
 	req: NextRequest,
-	{ params }: { params: { userId: string } }
+	res: NextResponse,
+	{ params }: { params: Promise<{ userId: string }> }
 ) {
 	try {
 		const { userId } = await params;

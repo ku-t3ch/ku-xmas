@@ -1,7 +1,6 @@
 import React from "react";
 import Particles from "@/components/ui/particles";
 import Christmas from "@/components/ui/chirstmas";
-import Logo from "@/components/logo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 

@@ -33,7 +33,7 @@ export async function GET(
 
 export async function POST(
 	req: NextRequest,
-	{ params }: { params: { userId: string } }
+	{ params }: { params: Promise<{ userId: string }> }
 ) {
 	try {
 		const body = await req.json();
@@ -47,7 +47,7 @@ export async function POST(
 				id: generateId(16),
 				senderName,
 				message,
-				receiverId: params.userId,
+				receiverId: (await params).userId,
 			},
 		});
 
