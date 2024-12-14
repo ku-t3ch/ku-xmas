@@ -32,7 +32,6 @@ export async function GET(
 // Update public link
 export async function PATCH(
 	req: NextRequest,
-	res: NextResponse,
 	{ params }: { params: Promise<{ userId: string }> }
 ) {
 	try {

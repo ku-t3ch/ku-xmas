@@ -154,10 +154,13 @@ export default function CreateLink() {
 				<CardContent className="flex flex-col items-center justify-center w-full space-y-2"></CardContent>
 				<CardFooter className="flex justify-end space-x-2 mt-6">
 					<Link href={"/home"} className="w-full">
-						<Button variant={"outline"} className="w-full">กลับหน้าหลัก</Button>
+						<Button variant={"outline"} className="w-full">
+							กลับหน้าหลัก
+						</Button>
 					</Link>
 					{currentLink === "" ? (
-						<Button className="bg-green-600 hover:bg-green-700 w-full"
+						<Button
+							className="bg-green-600 hover:bg-green-700 w-full"
 							disabled={loading || !userId}
 							onClick={createNewLink}
 						>
@@ -166,7 +169,10 @@ export default function CreateLink() {
 					) : (
 						<AlertDialog>
 							<AlertDialogTrigger className="w-full">
-								<Button disabled={loading || !userId} className="bg-green-600 hover:bg-green-700 w-full">
+								<Button
+									disabled={loading || !userId}
+									className="bg-green-600 hover:bg-green-700 w-full"
+								>
 									สร้างลิงก์ใหม่
 								</Button>
 							</AlertDialogTrigger>
@@ -184,7 +190,10 @@ export default function CreateLink() {
 									<AlertDialogCancel>
 										ยกเลิก
 									</AlertDialogCancel>
-									<AlertDialogAction onClick={createNewLink} className="bg-green-600 hover:bg-green-700">
+									<AlertDialogAction
+										onClick={createNewLink}
+										className="bg-green-600 hover:bg-green-700"
+									>
 										ยืนยัน
 									</AlertDialogAction>
 								</AlertDialogFooter>

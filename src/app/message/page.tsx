@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import axios from "axios";
-import { Loader2 } from "lucide-react";
+import { Loader2, MessageSquareOff } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -56,12 +56,12 @@ export default function RenderMessage() {
 			setLoading(false);
 		};
 		fetchUserMessage();
-	}, [reload]);
+	}, [reload, userId]);
 
 	return (
 		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
 			<SnowFallBackground />
-			<Card className="absolute">
+			<Card className="absolute max-w-[600px]">
 				<CardHeader>
 					<CardTitle className="text-xl font-bold">
 						มาดูสิว่าใครส่งคำอวยพรมาให้คุณบ้าง 🎁
@@ -75,36 +75,51 @@ export default function RenderMessage() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					{messages.length > 0 ? (
-						<ScrollArea className="h-[400px] w-full rounded-md border">
-							<div className="w-full h-full flex flex-col gap-4 p-4">
-								{messages.map((message) => (
-									<Card key={message.id}>
-										<CardHeader>
-											<CardTitle>
-												{message.senderName}
-											</CardTitle>
-											<CardDescription>
-												ส่งเมื่อ{" "}
-												{new Date(
-													message.createdAt
-												).toLocaleString("th-TH")}
-											</CardDescription>
-										</CardHeader>
-										<CardContent>
-											<article>{message.message}</article>
-										</CardContent>
-									</Card>
-								))}
-							</div>
-						</ScrollArea>
-					) : (
+					{loading ? (
 						<div className="flex flex-col w-full min-h-[300px] h-full justify-center items-center">
 							<Button variant={"ghost"}>
 								<Loader2 className="animate-spin" />
 								กำลังโหลดข้อมูล
 							</Button>
 						</div>
+					) : (
+						<>
+							{messages.length > 0 ? (
+								<ScrollArea className="h-[400px] w-full rounded-md border">
+									<div className="w-full h-full flex flex-col gap-4 p-4">
+										{messages.map((message) => (
+											<Card key={message.id}>
+												<CardHeader>
+													<CardTitle>
+														{message.senderName}
+													</CardTitle>
+													<CardDescription>
+														ส่งเมื่อ{" "}
+														{new Date(
+															message.createdAt
+														).toLocaleString(
+															"th-TH"
+														)}
+													</CardDescription>
+												</CardHeader>
+												<CardContent>
+													<article>
+														{message.message}
+													</article>
+												</CardContent>
+											</Card>
+										))}
+									</div>
+								</ScrollArea>
+							) : (
+								<div className="flex flex-col w-full min-h-[300px] h-full justify-center items-center space-y-4">
+									<MessageSquareOff size={"36"} />
+									<h3 className="font-bold">
+										ยังไม่มีข้อความ...
+									</h3>
+								</div>
+							)}
+						</>
 					)}
 				</CardContent>
 				<CardFooter>
