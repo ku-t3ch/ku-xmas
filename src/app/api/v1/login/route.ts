@@ -28,18 +28,17 @@ export async function POST(req: NextRequest) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
 		return NextResponse.json(
-			{ message: "เข้าสู่ระบบสำเร็จ" },
+			{ message: "Login successfully" },
 			{
-				status: 200,
 				headers: {
 					"Set-Cookie": sessionCookie.serialize(),
 				},
 			}
 		);
 	} catch (err) {
-		console.error(err);
+		console.error("path: /login method: post error:", err);
 		return NextResponse.json(
-			{ error: "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง" },
+			{ error: "Username or password is wrong" },
 			{ status: 500 }
 		);
 	}

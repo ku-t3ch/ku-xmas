@@ -55,7 +55,7 @@ export default function SendTo() {
 
   const [loading, setLoading] = useState(true);
   const onSubmit = async (values: z.infer<typeof messageFormSchema>) => {
-    const req = axios.post(`/api/v1/users/${receiver?.id}/message`, values);
+    const req = axios.post(`/api/v1/users/${receiver?.id}/messages`, values);
     toast.promise(req, {
       loading: "กำลังส่งคำอวยพร",
       error: (err) =>

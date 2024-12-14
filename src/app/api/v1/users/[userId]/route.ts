@@ -48,11 +48,14 @@ export async function PATCH(
 		});
 
 		return NextResponse.json({
-			message: "สร้างลิงก์สำเร็จ",
+			message: "Create a public link successfully",
 			publicLink: user.publicLink,
 		});
 	} catch (err) {
 		console.error("path: /users/[userId] method: patch error:", err);
-		return NextResponse.json({}, { status: 500 });
+		return NextResponse.json(
+			{ error: "Failed to create public link" },
+			{ status: 500 }
+		);
 	}
 }
