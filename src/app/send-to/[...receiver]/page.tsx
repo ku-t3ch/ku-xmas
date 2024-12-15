@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -137,6 +138,7 @@ export default function SendTo() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>ชื่อผู้ส่ง</FormLabel>
+                          <FormDescription>ชื่อนี้จะช่วยบอก {receiver.username} ว่าคำอวยพรนี้ส่งมาจากคุณ!</FormDescription>
                           <FormControl>
                             <Input {...field} placeholder="โปรดระบุ" />
                           </FormControl>
