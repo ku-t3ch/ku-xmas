@@ -1,5 +1,5 @@
 "use client";
-import SnowFallBackground from "@/components/snowFallBackground";
+// import SnowFallBackground from "@/components/snowFallBackground";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -60,7 +60,7 @@ export default function RenderMessage() {
 
 	return (
 		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
-			<SnowFallBackground />
+			{/* <SnowFallBackground /> */}
 			<Card className="absolute max-w-[600px]">
 				<CardHeader>
 					<CardTitle className="text-xl font-bold">

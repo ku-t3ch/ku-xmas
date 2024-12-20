@@ -26,7 +26,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import SnowfallBackground from "@/components/snowFallBackground";
+// import SnowfallBackground from "@/components/snowFallBackground";
 import { LogOut } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
@@ -51,7 +51,7 @@ export default function Homepage() {
 
 	return (
 		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
-			<SnowfallBackground />
+			{/* <SnowfallBackground /> */}
 			<Card className="relative">
 				<CardHeader>
 					<div className="inline-flex justify-center items-center">

@@ -8,7 +8,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-import SnowfallBackground from "@/components/snowFallBackground";
+// import SnowfallBackground from "@/components/snowFallBackground";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/logo";
@@ -106,7 +106,7 @@ export default function CreateLink() {
 
 	return (
 		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
-			<SnowfallBackground />
+			{/* <SnowfallBackground /> */}
 			<Card className="relative">
 				<CardHeader>
 					<div className="inline-flex justify-center items-center">

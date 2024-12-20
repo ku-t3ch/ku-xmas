@@ -108,8 +108,7 @@ export default function SendTo() {
 	}, [params, router]);
 
 	return (
-		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
-			<SnowFallBackground />
+		<>
 			{loading ? (
 				<>
 					<Button className="absolute">
@@ -227,6 +226,6 @@ export default function SendTo() {
 					)}
 				</>
 			)}
-		</div>
+		</>
 	);
 }
