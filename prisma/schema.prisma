@@ -11,12 +11,13 @@ datasource db {
 }
 
 model User {
-  id         String   @id
+  id         String @id
   username   String
   password   String
-  publicLink String   @default("")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  publicLink String @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   messagesReceived Message[] @relation("Receiver")
 
