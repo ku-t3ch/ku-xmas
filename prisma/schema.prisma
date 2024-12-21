@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id         String @id
-  username   String
-  password   String
-  publicLink String @default("")
-  avatar     String @default("")
+  id            String  @id
+  username      String
+  password      String
+  publicLink    String  @default("")
+  createdAvatar Boolean @default(false)
+  avatar        String  @default("")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

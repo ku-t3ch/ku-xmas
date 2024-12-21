@@ -19,6 +19,8 @@ export async function GET(
 				username: true,
 				publicLink: true,
 				messagesReceived: true,
+				createdAvatar: true,
+				avatar: true,
 			},
 		});
 
@@ -38,23 +40,26 @@ export async function PATCH(
 		const { userId } = await params;
 		if (!userId || userId !== (await getUserId())) throw new Error();
 
-		const { publicLink } = await req.json();
-		if (!publicLink) throw new Error();
+		// const { publicLink, avatar } = await req.json();
+		const data = await req.json();
+		if (data.publicLink) {
+			const hostPublicLink = process.env.HOST_PUBLIC_LINK as string;
+			data.publicLink = hostPublicLink.concat(data.publicLink);
+		}
 
-		const hostPublicLink = process.env.HOST_PUBLIC_LINK as string;
 		const user = await prisma.user.update({
 			where: { id: userId },
-			data: { publicLink: hostPublicLink.concat(publicLink) },
+			data: data,
 		});
 
 		return NextResponse.json({
-			message: "Create a public link successfully",
+			message: "Update user successfully",
 			publicLink: user.publicLink,
 		});
 	} catch (err) {
 		console.error("path: /users/[userId] method: patch error:", err);
 		return NextResponse.json(
-			{ error: "Failed to create public link" },
+			{ error: "Failed to update user" },
 			{ status: 500 }
 		);
 	}
