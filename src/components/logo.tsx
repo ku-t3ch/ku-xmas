@@ -7,8 +7,8 @@ export default function Logo() {
       <Image
         src="/image/kutech.png"
         alt="KU Tech Logo"
-        width={150}
-        height={120}
+        width={200}
+        height={200}
       />
     </div>
   );
