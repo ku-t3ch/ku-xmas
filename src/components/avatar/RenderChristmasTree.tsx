@@ -19,7 +19,7 @@ export default function RenderChristmasTree({
   trigger,
 }: {
   avatarInfo: props;
-  trigger: boolean;
+  trigger?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

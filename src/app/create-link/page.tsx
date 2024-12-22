@@ -105,103 +105,96 @@ export default function CreateLink() {
 	}, [router]);
 
 	return (
-		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6">
-			{/* <SnowfallBackground /> */}
-			<Card className="relative">
-				<CardHeader>
-					<div className="inline-flex justify-center items-center">
-						<Logo />
-					</div>
-					<CardTitle className="w-full inline-flex justify-center items-center space-x-4 text-2xl font-bold">
-						มาสร้างเส้นทางมอบคำอวยพรให้คุณกัน ⭐
-					</CardTitle>
-				</CardHeader>
-				<CardContent className="w-full flex flex-col items-center justify-center space-y-4">
-					<Label className="w-full text-left">ลิงก์ของคุณ</Label>
-					<div className="w-full flex space-x-2">
-						<Input
-							className="w-full truncate"
-							value={
-								currentLink
-									? currentLink
-									: loading
-									? "กำลังโหลดข้อมูล"
-									: "ยังไม่ได้สร้าง"
-							}
-							readOnly
-						/>
-						<motion.div whileTap={{ scale: 0.9 }}>
-							<Button
-								variant={"outline"}
-								onClick={handleCopy}
-								disabled={loading}
-							>
-								{isCopied ? (
-									<div className="inline-flex items-center space-x-2">
-										<FaCheck />
-										<p>คัดลอกลิงก์แล้ว</p>
-									</div>
-								) : (
-									<div className="inline-flex items-center space-x-2">
-										<FiCopy />
-										<p>คัดลอกลิงก์</p>
-									</div>
-								)}
-							</Button>
-						</motion.div>
-					</div>
-				</CardContent>
-				<CardContent className="flex flex-col items-center justify-center w-full space-y-2"></CardContent>
-				<CardFooter className="flex justify-end space-x-2 mt-6">
-					<Link href={"/home"} className="w-full">
-						<Button variant={"outline"} className="w-full">
-							กลับหน้าหลัก
-						</Button>
-					</Link>
-					{currentLink === "" ? (
+		<Card className="relative">
+			<CardHeader>
+				<div className="inline-flex justify-center items-center">
+					<Logo />
+				</div>
+				<CardTitle className="w-full inline-flex justify-center items-center space-x-4 text-2xl font-bold">
+					มาสร้างเส้นทางมอบคำอวยพรให้คุณกัน ⭐
+				</CardTitle>
+			</CardHeader>
+			<CardContent className="w-full flex flex-col items-center justify-center space-y-4">
+				<Label className="w-full text-left">ลิงก์ของคุณ</Label>
+				<div className="w-full flex space-x-2">
+					<Input
+						className="w-full truncate"
+						value={
+							currentLink
+								? currentLink
+								: loading
+								? "กำลังโหลดข้อมูล"
+								: "ยังไม่ได้สร้าง"
+						}
+						readOnly
+					/>
+					<motion.div whileTap={{ scale: 0.9 }}>
 						<Button
-							className="bg-green-600 hover:bg-green-700 w-full"
-							disabled={loading || !userId}
-							onClick={createNewLink}
+							variant={"outline"}
+							onClick={handleCopy}
+							disabled={loading}
 						>
-							สร้างลิงก์ใหม่
+							{isCopied ? (
+								<div className="inline-flex items-center space-x-2">
+									<FaCheck />
+									<p>คัดลอกลิงก์แล้ว</p>
+								</div>
+							) : (
+								<div className="inline-flex items-center space-x-2">
+									<FiCopy />
+									<p>คัดลอกลิงก์</p>
+								</div>
+							)}
 						</Button>
-					) : (
-						<AlertDialog>
-							<AlertDialogTrigger asChild className="w-full">
-								<Button
-									disabled={loading || !userId}
-									className="bg-green-600 hover:bg-green-700 w-full"
+					</motion.div>
+				</div>
+			</CardContent>
+			<CardContent className="flex flex-col items-center justify-center w-full space-y-2"></CardContent>
+			<CardFooter className="flex justify-end space-x-2 mt-6">
+				<Link href={"/home"} className="w-full">
+					<Button variant={"outline"} className="w-full">
+						กลับหน้าหลัก
+					</Button>
+				</Link>
+				{currentLink === "" ? (
+					<Button
+						className="bg-green-600 hover:bg-green-700 w-full"
+						disabled={loading || !userId}
+						onClick={createNewLink}
+					>
+						สร้างลิงก์ใหม่
+					</Button>
+				) : (
+					<AlertDialog>
+						<AlertDialogTrigger asChild className="w-full">
+							<Button
+								disabled={loading || !userId}
+								className="bg-green-600 hover:bg-green-700 w-full"
+							>
+								สร้างลิงก์ใหม่
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>โปรดระวัง !</AlertDialogTitle>
+								<AlertDialogDescription>
+									หากคุณยืนยันการสร้างลิงก์ใหม่จะส่งผลให้ลิงก์ปัจจุบันที่ใช้งานอยู่นั้นไม่สามารถเข้าถึงได้อีกต่อไป
+									โปรดตรวจสอบให้เรียบร้อยก่อนการยืนยัน
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={createNewLink}
+									className="bg-green-600 hover:bg-green-700"
 								>
-									สร้างลิงก์ใหม่
-								</Button>
-							</AlertDialogTrigger>
-							<AlertDialogContent>
-								<AlertDialogHeader>
-									<AlertDialogTitle>
-										โปรดระวัง !
-									</AlertDialogTitle>
-									<AlertDialogDescription>
-										หากคุณยืนยันการสร้างลิงก์ใหม่จะส่งผลให้ลิงก์ปัจจุบันที่ใช้งานอยู่นั้นไม่สามารถเข้าถึงได้อีกต่อไป
-										โปรดตรวจสอบให้เรียบร้อยก่อนการยืนยัน
-									</AlertDialogDescription>
-								</AlertDialogHeader>
-								<AlertDialogFooter>
-									<AlertDialogCancel>
-										ยกเลิก
-									</AlertDialogCancel>
-									<AlertDialogAction
-										onClick={createNewLink}
-										className="bg-green-600 hover:bg-green-700"
-									>
-										ยืนยัน
-									</AlertDialogAction>
-								</AlertDialogFooter>
-							</AlertDialogContent>
-						</AlertDialog>
-					)}
-				</CardFooter>
-			</Card>
-		</div>
+									ยืนยัน
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				)}
+			</CardFooter>
+		</Card>
 	);
 }

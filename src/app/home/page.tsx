@@ -93,11 +93,9 @@ export default function Homepage() {
 	}, [avatarInfo]);
 
 	return (
-		<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black px-6 py-6">
-			{/* <SnowfallBackground /> */}
-			<Card className="relative">
-				<CardHeader>
-					<div className="absolute right-3 top-3">
+		<Card>
+			<CardHeader className="relative">
+				<div className="absolute right-3 top-3">
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
 							<Button
@@ -130,27 +128,27 @@ export default function Homepage() {
 							</AlertDialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>
-					</div>
-					<div className="inline-flex justify-center items-center">
-						<Logo />
-					</div>
-					<CardTitle className="w-full flex flex-col fjustify-center font-bold text-2xl mt-4">
-						สุขสันต์วันคริสต์มาสอีฟ มามอบคำอวยพรให้เพื่อน ๆ กันเถอะ!
-					</CardTitle>
-				</CardHeader>
-				<CardContent className="flex flex-col items-center justify-center w-full space-y-2">
-					<div className="relative w-full">
-						<Link href={"/message"} className="cursor-pointer">
-							<RenderChristmasTree
-								avatarInfo={avatarInfo}
-								trigger={trigger}
-							/>
-						</Link>
-						<CardDescription className="absolute bottom-5 w-full text-center">
-							กดที่ต้นคริสต์มาสของคุณเพื่อดูคำอวยพรที่ส่งมา
-						</CardDescription>
-					</div>
-					{/* <Link href={"/message"}>
+				</div>
+				<div className="inline-flex justify-center items-center">
+					<Logo />
+				</div>
+				<CardTitle className="w-full flex flex-col fjustify-center font-bold text-2xl mt-4">
+					สุขสันต์วันคริสต์มาสอีฟ มามอบคำอวยพรให้เพื่อน ๆ กันเถอะ!
+				</CardTitle>
+			</CardHeader>
+			<CardContent className="flex flex-col items-center justify-center w-full space-y-2">
+				<div className="relative w-full">
+					<Link href={"/message"} className="cursor-pointer">
+						<RenderChristmasTree
+							avatarInfo={avatarInfo}
+							trigger={trigger}
+						/>
+					</Link>
+					<CardDescription className="absolute bottom-5 w-full text-center">
+						กดที่ต้นคริสต์มาสของคุณเพื่อดูคำอวยพรที่ส่งมา
+					</CardDescription>
+				</div>
+				{/* <Link href={"/message"}>
 						<Button
 							variant={"ghost"}
 							className="w-fit h-full bg-gradient-to-r from-white to-white"
@@ -179,9 +177,24 @@ export default function Homepage() {
 					<CardDescription>
 						เปิดกล่องของขวัญเพื่อดูคำอวยพร
 					</CardDescription> */}
-				</CardContent>
-				<CardFooter className="flex justify-end space-x-2">
-					
+			</CardContent>
+			<CardFooter className="flex justify-end space-x-2">
+				<div className="sm:hidden flex w-full justify-center space-x-2">
+					<Link href={"/avatar"}>
+						<Button size={"sm"} variant={"outline"}>
+							ปรับแต่งต้นคริสต์มาส
+						</Button>
+					</Link>
+					<Link href={"/create-link"}>
+						<Button
+							size={"sm"}
+							className="bg-green-600 hover:bg-green-700"
+						>
+							สร้างลิ้งค์ส่งคำอวยพร
+						</Button>
+					</Link>
+				</div>
+				<div className="hidden sm:flex w-full justify-end space-x-2">
 					<Link href={"/avatar"}>
 						<Button variant={"outline"}>
 							ปรับแต่งต้นคริสต์มาส
@@ -192,8 +205,8 @@ export default function Homepage() {
 							สร้างลิ้งค์ส่งคำอวยพร
 						</Button>
 					</Link>
-				</CardFooter>
-			</Card>
-		</div>
+				</div>
+			</CardFooter>
+		</Card>
 	);
 }

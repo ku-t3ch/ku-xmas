@@ -4,7 +4,7 @@ import "./globals.css";
 import { Noto_Sans_Thai } from "next/font/google";
 import { Toaster } from "sonner";
 import Script from "next/script";
-import { ParticleBackground } from "@/components/ParticleBackground";
+// import { ParticleBackground } from "@/components/ParticleBackground";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -36,7 +36,7 @@ export default function RootLayout({
 			<body
 				className={`${notoSansThai.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<ParticleBackground />
+				{/* <ParticleBackground /> */}
 				<Toaster richColors position="top-center" />
 				{children}
 				<Script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></Script>
