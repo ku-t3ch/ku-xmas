@@ -1,113 +1,130 @@
 "use client";
 import { useEffect, useRef } from "react";
-// import { categoriesType } from "./AvatarCreate";
 
 const christmasTreePath = "/image/asset/christmas-tree.png";
-// const keys: categoriesType[] = ["accessory", "face", "shoe"];
 const accessoryPosition = {
-	accessory: { x: 0, y: 0 },
-	face: { x: 0, y: 150 },
-	shoe: { x: 0, y: 10 },
+  accessory: { x: 0, y: 0 },
+  face: { x: 0, y: 150 },
+  shoe: { x: 0, y: 10 },
 };
 
 interface props {
-	accessory: string;
-	face: string;
-	shoe: string;
+  accessory: string;
+  face: string;
+  shoe: string;
 }
 
 export default function RenderChristmasTree({
-	avatarInfo,
-	trigger,
+  avatarInfo,
+  trigger,
 }: {
-	avatarInfo: props;
-	trigger: boolean;
+  avatarInfo: props;
+  trigger: boolean;
 }) {
-	const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-	const handleRedrawCanvas = async () => {
-		if (canvasRef.current) {
-			const canvas = canvasRef.current;
-			const ctx = canvas.getContext("2d");
+  const handleRedrawCanvas = async () => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
 
-			if (ctx) {
-				// Adjust canvas resolution
-				const devicePixelRatio = window.devicePixelRatio || 1;
-				const width = 2480; // Tree image width
-				const height = 3508; // Tree image height
+      if (ctx) {
+        // ขนาดต้นคริสต์มาสต้นฉบับ
+        const treeWidth = 2480;
+        const treeHeight = 3508;
 
-				canvas.width = width * devicePixelRatio;
-				canvas.height = height * devicePixelRatio;
-				canvas.style.width = `${width / 10}px`; // Adjust for display size
-				canvas.style.height = `${height / 10}px`;
+        // ใช้สเกลเพื่อปรับขนาด
+        const scale = 0.1; // ลดขนาดลงเป็น 30%
 
-				ctx.scale(devicePixelRatio, devicePixelRatio);
+        // ปรับขนาด canvas ให้เหมาะสมกับ devicePixelRatio
+        const devicePixelRatio = window.devicePixelRatio || 1;
+        const width = treeWidth * scale * devicePixelRatio;
+        const height = treeHeight * scale * devicePixelRatio;
 
-				// Clear the canvas
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ปรับขนาด canvas
+        canvas.width = width;
+        canvas.height = height;
 
-				await drawImage(ctx, christmasTreePath, 0, 0, width, height);
+        // ปรับขนาดที่แสดงบนหน้าจอ
+        canvas.style.width = `${treeWidth * scale}px`;
+        canvas.style.height = `${treeHeight * scale}px`;
 
-				const drawingOrder = [
-					{
-						src: avatarInfo.accessory,
-						x: accessoryPosition.accessory.x,
-						y: accessoryPosition.accessory.y,
-						width: 2480,
-						height: 3508,
-					},
-					{
-						src: avatarInfo.face,
-						x: accessoryPosition.face.x,
-						y: accessoryPosition.face.y,
-						width: 2480,
-						height: 3508,
-					},
-					{
-						src: avatarInfo.shoe,
-						x: accessoryPosition.shoe.x,
-						y: accessoryPosition.shoe.y,
-						width: 2480,
-						height: 3508,
-					},
-				];
+        // สเกล ctx ให้เหมาะสมกับการวาด
+        ctx.scale(devicePixelRatio, devicePixelRatio);
 
-				for (const { src, x, y, width, height } of drawingOrder) {
-					if (src) {
-						await drawImage(ctx, src, x, y, width, height);
-					}
-				}
-			}
-		}
-	};
+        // เคลียร์ canvas ก่อนที่จะวาดใหม่
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	const drawImage = (
-		ctx: CanvasRenderingContext2D,
-		src: string,
-		x: number,
-		y: number,
-		width: number,
-		height: number
-	): Promise<void> => {
-		return new Promise((resolve, reject) => {
-			const img = new window.Image();
-			img.src = src;
-			img.onload = () => {
-				ctx.drawImage(img, x, y, width, height);
-				resolve();
-			};
-			img.onerror = () =>
-				reject(new Error(`Failed to load image: ${src}`));
-		});
-	};
+        // วาดต้นคริสต์มาส
+        await drawImage(ctx, christmasTreePath, 0, 0, treeWidth * scale, treeHeight * scale);
 
-	useEffect(() => {
-		handleRedrawCanvas();
-	}, [trigger]);
+        // วาดชิ้นส่วนต่างๆ
+        const drawingOrder = [
+          {
+            src: avatarInfo.accessory,
+            x: accessoryPosition.accessory.x * scale,
+            y: accessoryPosition.accessory.y * scale,
+            width: treeWidth * scale,
+            height: treeHeight * scale,
+          },
+          {
+            src: avatarInfo.face,
+            x: accessoryPosition.face.x * scale,
+            y: accessoryPosition.face.y * scale,
+            width: treeWidth * scale,
+            height: treeHeight * scale,
+          },
+          {
+            src: avatarInfo.shoe,
+            x: accessoryPosition.shoe.x * scale,
+            y: accessoryPosition.shoe.y * scale,
+            width: treeWidth * scale,
+            height: treeHeight * scale,
+          },
+        ];
 
-	return (
-		<div className="w-full flex justify-center">
-			<canvas ref={canvasRef} className="rounded-lg" />
-		</div>
-	);
+        for (const { src, x, y, width, height } of drawingOrder) {
+          if (src) {
+            await drawImage(ctx, src, x, y, width, height);
+          }
+        }
+      }
+    }
+  };
+
+  const drawImage = (
+    ctx: CanvasRenderingContext2D,
+    src: string,
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image();
+      img.src = src;
+      img.onload = () => {
+        ctx.drawImage(img, x, y, width, height);
+        resolve();
+      };
+      img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+    });
+  };
+
+  useEffect(() => {
+    handleRedrawCanvas();
+  }, [trigger]);
+
+  return (
+    <div className="w-full flex justify-center">
+      <canvas
+        ref={canvasRef}
+        className="rounded-lg"
+        style={{
+          maxWidth: "100%",  // กำหนดให้ canvas ไม่เกินขนาด container
+          maxHeight: "100%", // กำหนดให้ canvas ไม่เกินขนาด container
+        }}
+      />
+    </div>
+  );
 }
