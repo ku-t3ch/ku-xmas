@@ -56,18 +56,18 @@ export default function SendTo() {
 
 	const [loading, setLoading] = useState(true);
 	const onSubmit = async (values: z.infer<typeof messageFormSchema>) => {
-		const req = axios.post(
-			`/api/v1/users/${receiver?.id}/messages`,
-			values
-		);
+		const req = axios.post(`/api/v1/users/${receiver?.id}/messages`, values);
+	
 		toast.promise(req, {
 			loading: "กำลังส่งคำอวยพร",
 			error: (err) =>
-				err.response.data.error ??
-				"เกิดข้อผิดพลาดในระหว่างการส่งคำอวยพร",
-			success: () => "ส่งคำอวยพรสำเร็จ!",
+				err.response.data.error ?? "เกิดข้อผิดพลาดในระหว่างการส่งคำอวยพร",
+			success: "ส่งคำอวยพรสำเร็จ!",
+		});
+		req.then(() => router.push("/home")).catch(() => {
 		});
 	};
+	
 
 	useEffect(() => {
 		const fetchReceiver = async () => {

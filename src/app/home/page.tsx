@@ -99,7 +99,7 @@ export default function Homepage() {
 				<CardHeader>
 					<div className="absolute right-3 top-3">
 					<AlertDialog>
-						<AlertDialogTrigger>
+						<AlertDialogTrigger asChild>
 							<Button
 								variant={"outline"}
 								className="text-red-600 hover:text-red-600"

@@ -168,7 +168,7 @@ export default function CreateLink() {
 						</Button>
 					) : (
 						<AlertDialog>
-							<AlertDialogTrigger className="w-full">
+							<AlertDialogTrigger asChild className="w-full">
 								<Button
 									disabled={loading || !userId}
 									className="bg-green-600 hover:bg-green-700 w-full"
