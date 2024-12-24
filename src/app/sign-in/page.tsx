@@ -44,7 +44,7 @@ export default function SignIn() {
 	const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
 		const req = axios.post("/api/v1/login", values);
 		toast.promise(req, {
-			loading: "กำลังเข้าสู่่ระบบ",
+			loading: "กำลังเข้าสู่ระบบ",
 			error: (err) =>
 				err.response.data.error ?? "เกิดข้อผิดพลาดในการเข้าสู่ระบบ",
 			success: () => {
