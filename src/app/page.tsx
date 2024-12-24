@@ -7,8 +7,8 @@ export default function First() {
 		<>
 			<div className="relative">
 				<Link href={"/sign-in"}>
-					<RainbowButton className="">
-						มาร่ามอวยพรไปด้วยกันเถอะ !
+					<RainbowButton theme="white" className="">
+						มาร่วมอวยพรไปด้วยกันเถอะ !
 					</RainbowButton>
 				</Link>
 			</div>
