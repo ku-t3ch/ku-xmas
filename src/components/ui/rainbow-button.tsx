@@ -4,13 +4,13 @@ import { cn } from "@/lib/utils";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface RainbowButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  theme: string
+  theme?: string
 }
 
 export function RainbowButton({
   children,
   className,
-  theme,
+  theme = "black",
   ...props
 }: RainbowButtonProps) {
   return (

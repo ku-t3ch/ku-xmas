@@ -23,6 +23,9 @@ export default function MainTemplate({
 			<div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-black p-6">
 				{children}
 			</div>
+			<footer className="bg-black text-white text-center py-4">
+				<p className="text-sm">🎄 Made by Human on Earth 🎅</p>
+			</footer>
 		</>
 	);
 }

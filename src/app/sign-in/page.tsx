@@ -57,7 +57,7 @@ export default function SignIn() {
 	return (
 		<Card className="absolute border-0 min-w-[350px]">
 			<CardHeader>
-				<div className="inline-flex justify-center items-center">
+				<div className="inline-flex justify-center items-center pb-6">
 					<Logo />
 				</div>
 				<CardTitle className="w-full inline-flex justify-center font-bold text-2xl">
