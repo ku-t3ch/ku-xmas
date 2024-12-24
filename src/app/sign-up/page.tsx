@@ -2,7 +2,7 @@
 
 import Logo from "@/components/logo";
 import {
-	Card,
+	// Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
@@ -54,9 +54,9 @@ export default function SignUp() {
 	};
 
 	return (
-		<Card className="relative overflow-hidden border-0 min-w-[350px]">
+		<div className="min-w-[350px] text-white">
 			<CardHeader>
-				<div className="inline-flex justify-center items-center">
+				<div className="inline-flex justify-center items-center pb-6">
 					<Logo />
 				</div>
 				<CardTitle className="w-full inline-flex justify-center font-bold text-2xl">
@@ -76,7 +76,10 @@ export default function SignUp() {
 								<FormItem>
 									<FormLabel>ชื่อผู้ใช้งาน</FormLabel>
 									<FormControl>
-										<Input {...field} />
+										<Input
+											{...field}
+											className="bg-white/10 backdrop-blur-md"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -89,7 +92,11 @@ export default function SignUp() {
 								<FormItem>
 									<FormLabel>รหัสผ่าน</FormLabel>
 									<FormControl>
-										<Input type="password" {...field} />
+										<Input
+											type="password"
+											{...field}
+											className="bg-white/10 backdrop-blur-md"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -102,7 +109,11 @@ export default function SignUp() {
 								<FormItem>
 									<FormLabel>ยืนยันรหัสผ่าน</FormLabel>
 									<FormControl>
-										<Input type="password" {...field} />
+										<Input
+											type="password"
+											{...field}
+											className="bg-white/10 backdrop-blur-md"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -120,13 +131,13 @@ export default function SignUp() {
 			<CardFooter>
 				<div className="flex flex-col w-full">
 					<div className="inline-flex items-center justify-center w-full mt-8 gap-2">
-						<h3>มีบัญชีอยู่แล้ว ? </h3>
+						<h3 className="text-white/80">มีบัญชีอยู่แล้ว ? </h3>
 						<Link href={"/sign-in"} className="underline">
 							เข้าสู่ระบบ
 						</Link>
 					</div>
 				</div>
 			</CardFooter>
-		</Card>
+		</div>
 	);
 }

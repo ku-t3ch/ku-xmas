@@ -44,6 +44,7 @@ export default function Homepage() {
 		shoe: "",
 	});
 	const [trigger, setTrigger] = useState(false);
+	const [totalMessage, setTotalMessage] = useState(0);
 
 	const onSubmit = () => {
 		const res = axios.post("/api/v1/logout");
@@ -68,7 +69,8 @@ export default function Homepage() {
 				setUserId(userId);
 
 				const resUser = await axios.get(`/api/v1/users/${userId}`);
-				const { createdAvatar, avatar } = resUser.data.user;
+				const { createdAvatar, avatar, messagesReceived } =
+					resUser.data.user;
 
 				if (!createdAvatar) {
 					toast.warning(
@@ -78,6 +80,7 @@ export default function Homepage() {
 				}
 
 				setAvatarInfo(JSON.parse(avatar));
+				setTotalMessage(messagesReceived.length ?? 0);
 			} catch (err) {
 				console.error(err);
 				toast.error("ไม่สามารถโหลดข้อมูลผู้ให้งานได้");
@@ -98,7 +101,7 @@ export default function Homepage() {
 				<div className="absolute right-1 top-1">
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
-							<Button variant={"ghost"} className="text-white">
+							<Button variant={"ghost"} className="text-white border-0">
 								<LogOut />
 								{/* ออกจากระบบ */}
 							</Button>
@@ -142,14 +145,18 @@ export default function Homepage() {
 						/>
 					</Link>
 					<CardDescription className="absolute bottom-5 w-full text-center text-white/80">
-						กดที่ต้นคริสต์มาสของคุณเพื่อดูคำอวยพรที่ส่งมา
+						กดที่ต้นคริสต์มาสของคุณเพื่อดู{" "}
+						{totalMessage > 0 ? totalMessage : ""} คำอวยพรที่ส่งมา
 					</CardDescription>
 				</div>
 			</CardContent>
 			<CardFooter className="flex justify-end space-x-2">
 				<div className="flex w-full justify-end space-x-2">
 					<Link href={"/avatar"} className="w-full">
-						<Button variant={"outline"} className="w-full">
+						<Button
+							variant={"outline"}
+							className="w-full bg-white/10 text-white backdrop-blur-sm border-0"
+						>
 							ปรับแต่งต้นคริสต์มาส
 						</Button>
 					</Link>

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 // import { ParticleBackground } from "@/components/ParticleBackground";
 import Snowfall from "react-snowfall";
 
@@ -24,7 +25,17 @@ export default function MainTemplate({
 				{children}
 			</div>
 			<footer className="bg-black text-white text-center py-4">
-				<p className="text-sm">🎄 Made by Human on Earth 🎅</p>
+				<p className="text-sm">
+					🎄 Made by{" "}
+					<Link
+						href={"https://www.instagram.com/hotwasabisushi/"}
+						className="underline"
+						target="_blank"
+					>
+						Human
+					</Link>{" "}
+					on Earth 🎅
+				</p>
 			</footer>
 		</>
 	);
