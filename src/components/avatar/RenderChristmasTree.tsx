@@ -34,7 +34,7 @@ export default function RenderChristmasTree({
         const treeHeight = 3508;
 
         // ใช้สเกลเพื่อปรับขนาด
-        const scale = 0.1; // ลดขนาดลงเป็น 30%
+        const scale = 0.2; // ลดขนาดลงเป็น 30%
 
         // ปรับขนาด canvas ให้เหมาะสมกับ devicePixelRatio
         const devicePixelRatio = window.devicePixelRatio || 1;
@@ -46,8 +46,8 @@ export default function RenderChristmasTree({
         canvas.height = height;
 
         // ปรับขนาดที่แสดงบนหน้าจอ
-        canvas.style.width = `${treeWidth * scale}px`;
-        canvas.style.height = `${treeHeight * scale}px`;
+        // canvas.style.width = `${treeWidth * scale}px`;
+        // canvas.style.height = `${treeHeight * scale}px`;
 
         // สเกล ctx ให้เหมาะสมกับการวาด
         ctx.scale(devicePixelRatio, devicePixelRatio);
@@ -119,10 +119,10 @@ export default function RenderChristmasTree({
     <div className="w-full flex justify-center">
       <canvas
         ref={canvasRef}
-        className="rounded-lg"
+        className="w-full md:w-[405px] rounded-lg"
         style={{
-          maxWidth: "100%",  // กำหนดให้ canvas ไม่เกินขนาด container
-          maxHeight: "100%", // กำหนดให้ canvas ไม่เกินขนาด container
+          // maxWidth: "100%",  // กำหนดให้ canvas ไม่เกินขนาด container
+          // maxHeight: "100%", // กำหนดให้ canvas ไม่เกินขนาด container
         }}
       />
     </div>
