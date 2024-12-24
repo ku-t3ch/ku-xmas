@@ -75,7 +75,7 @@ export default function RenderMessage() {
 			<CardContent>
 				{loading ? (
 					<div className="flex flex-col w-full min-h-[300px] h-full justify-center items-center">
-						<Button variant={"ghost"}>
+						<Button variant={"ghost"} className="text-white">
 							<Loader2 className="animate-spin" />
 							กำลังโหลดข้อมูล
 						</Button>
@@ -111,7 +111,7 @@ export default function RenderMessage() {
 								</div>
 							</ScrollArea>
 						) : (
-							<div className="flex flex-col w-full min-h-[300px] h-full justify-center items-center space-y-4">
+							<div className="flex flex-col w-full min-h-[300px] h-full justify-center items-center space-y-4 text-white">
 								<MessageSquareOff size={"36"} />
 								<h3 className="font-bold">
 									ยังไม่มีข้อความ...
@@ -124,7 +124,7 @@ export default function RenderMessage() {
 			<CardFooter>
 				<div className="inline-flex w-full justify-end space-x-2">
 					<Link href="/home" className="w-full">
-						<Button className="w-full" variant={"outline"}>
+						<Button className="w-full bg-white/10 text-white backdrop-blur-sm border-0" variant={"outline"}>
 							กลับหน้าหลัก
 						</Button>
 					</Link>

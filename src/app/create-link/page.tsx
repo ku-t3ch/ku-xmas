@@ -120,7 +120,7 @@ export default function CreateLink() {
 				</Label>
 				<div className="w-full flex space-x-2">
 					<Input
-						className="w-full truncate text-white"
+						className="w-full truncate text-white bg-white/10 backdrop-blur-md"
 						value={
 							currentLink
 								? currentLink
@@ -135,6 +135,7 @@ export default function CreateLink() {
 							variant={"outline"}
 							onClick={handleCopy}
 							disabled={loading}
+							className="bg-white/10 text-white hover:bg-white/20 hover:text-white"
 						>
 							{isCopied ? (
 								<div className="inline-flex items-center space-x-2">
@@ -154,7 +155,10 @@ export default function CreateLink() {
 			<CardContent className="flex flex-col items-center justify-center w-full space-y-2"></CardContent>
 			<CardFooter className="flex justify-end space-x-2 mt-6">
 				<Link href={"/home"} className="w-full">
-					<Button variant={"outline"} className="w-full">
+					<Button
+						variant={"outline"}
+						className="w-full bg-white/10 text-white backdrop-blur-sm border-0"
+					>
 						กลับหน้าหลัก
 					</Button>
 				</Link>

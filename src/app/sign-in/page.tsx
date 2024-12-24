@@ -7,7 +7,7 @@ import axios from "axios";
 
 import Logo from "@/components/logo";
 import {
-	Card,
+	// Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
@@ -55,7 +55,7 @@ export default function SignIn() {
 	};
 
 	return (
-		<Card className="absolute border-0 min-w-[350px]">
+		<div className="border-0 min-w-[350px] text-white">
 			<CardHeader>
 				<div className="inline-flex justify-center items-center pb-6">
 					<Logo />
@@ -77,7 +77,11 @@ export default function SignIn() {
 								<FormItem>
 									<FormLabel>ชื่อผู้ใช้งาน</FormLabel>
 									<FormControl>
-										<Input {...field} />
+										<Input
+											{...field}
+											placeholder=""
+											className="bg-white/10 backdrop-blur-md"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -90,7 +94,11 @@ export default function SignIn() {
 								<FormItem>
 									<FormLabel>รหัสผ่าน</FormLabel>
 									<FormControl>
-										<Input type="password" {...field} />
+										<Input
+											type="password"
+											{...field}
+											className="bg-white/10 backdrop-blur-md"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -108,13 +116,13 @@ export default function SignIn() {
 			<CardFooter>
 				<div className="flex flex-col w-full">
 					<div className="inline-flex items-center justify-center w-full mt-8 gap-2">
-						<h3>ยังไม่มีบัญชี ? </h3>
+						<h3 className="text-white/80">ยังไม่มีบัญชี ? </h3>
 						<Link href={"/sign-up"} className="underline">
 							สมัครสมาชิก
 						</Link>
 					</div>
 				</div>
 			</CardFooter>
-		</Card>
+		</div>
 	);
 }

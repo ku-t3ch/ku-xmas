@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import SnowFallBackground from "@/components/snowFallBackground";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -143,7 +142,7 @@ export default function SendTo() {
 							/>
 						</motion.div>
 						<div className="inline-flex text-white text-lg font-bold space-x-2">
-							<h3>ส่งข้อความสำเร็จ</h3>
+							<h3>ส่งข้อความสำเร็จ !</h3>
 							<MailCheck />
 						</div>
 						<Link href={"/home"}>
@@ -182,7 +181,7 @@ export default function SendTo() {
 											</CardDescription>
 										</div>
 									</CardContent>
-									<Card className="pt-6">
+									<div className="pt-6">
 										<CardContent>
 											<Form {...form}>
 												<form
@@ -196,10 +195,10 @@ export default function SendTo() {
 														name="senderName"
 														render={({ field }) => (
 															<FormItem>
-																<FormLabel className="">
+																<FormLabel className="text-white">
 																	ชื่อผู้ส่ง
 																</FormLabel>
-																<FormDescription>
+																<FormDescription className="text-white/80">
 																	ชื่อนี้จะช่วยบอก{" "}
 																	{
 																		receiver.username
@@ -210,7 +209,7 @@ export default function SendTo() {
 																	<Input
 																		{...field}
 																		placeholder="โปรดระบุ"
-																		className=""
+																		className="bg-white/10 backdrop-blur-md text-white"
 																	/>
 																</FormControl>
 																<FormMessage />
@@ -222,27 +221,30 @@ export default function SendTo() {
 														name="message"
 														render={({ field }) => (
 															<FormItem>
-																<FormLabel className="">
+																<FormLabel className="text-white">
 																	คำอวยพรของคุณ
 																</FormLabel>
 																<FormControl>
 																	<Textarea
 																		placeholder="ขอให้..."
 																		{...field}
-																		className="h-[150px] resize-none"
+																		className="h-[150px] resize-none bg-white/10 backdrop-blur-md text-white"
 																	/>
 																</FormControl>
 																<FormMessage />
 															</FormItem>
 														)}
 													/>
-													<RainbowButton className="w-full">
+													<RainbowButton
+														className="w-full inline-flex items-center space-x-2"
+														theme="white"
+													>
 														ส่งคำอวยพร
 													</RainbowButton>
 												</form>
 											</Form>
 										</CardContent>
-									</Card>
+									</div>
 									<div className="p-4">
 										<CardDescription className="inline-flex w-full items-center justify-center space-x-2 mt-4">
 											<p className="text-white/70">

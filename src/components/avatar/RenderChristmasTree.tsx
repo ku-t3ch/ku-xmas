@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const christmasTreePath = "/image/asset/christmas-tree.png";
 const accessoryPosition = {
@@ -23,7 +24,7 @@ export default function RenderChristmasTree({
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const handleRedrawCanvas = async () => {
+  const handleRedrawCanvas = useCallback(async () => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
@@ -90,7 +91,11 @@ export default function RenderChristmasTree({
         }
       }
     }
-  };
+  }, [avatarInfo.accessory, avatarInfo.face, avatarInfo.shoe]);
+
+  useEffect(() => {
+    handleRedrawCanvas();
+  }, [handleRedrawCanvas, trigger]);
 
   const drawImage = (
     ctx: CanvasRenderingContext2D,
@@ -110,10 +115,6 @@ export default function RenderChristmasTree({
       img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
     });
   };
-
-  useEffect(() => {
-    handleRedrawCanvas();
-  }, [trigger]);
 
   return (
     <div className="w-full flex justify-center">

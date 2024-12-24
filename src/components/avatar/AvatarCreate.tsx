@@ -45,7 +45,7 @@ const accessoriesAttr: categoryAttr = {
 	totalAssets: 6,
 	relativePath: "/image/asset/accessories/",
 	prefixFileName: "acc_",
-	fileExt: ".png",
+	fileExt: ".PNG",
 };
 
 const facesAttr: categoryAttr = {
@@ -54,7 +54,7 @@ const facesAttr: categoryAttr = {
 	totalAssets: 5,
 	relativePath: "/image/asset/faces/",
 	prefixFileName: "face_",
-	fileExt: ".png",
+	fileExt: ".PNG",
 };
 const shoesAttr: categoryAttr = {
 	label: "รองเท้า",
@@ -62,7 +62,7 @@ const shoesAttr: categoryAttr = {
 	totalAssets: 3,
 	relativePath: "/image/asset/shoes/",
 	prefixFileName: "shoe_",
-	fileExt: ".png",
+	fileExt: ".PNG",
 };
 
 const categories: categoryAttr[] = [accessoriesAttr, facesAttr, shoesAttr];
@@ -153,8 +153,11 @@ export default function AvatarCreate() {
 				<div className="flex w-full space-x-4">
 					{categories.map((object, key) => (
 						<Drawer key={key}>
-							<DrawerTrigger>
-								<Button variant={"ghost"} className="text-white">
+							<DrawerTrigger className="w-full">
+								<Button
+									variant={"ghost"}
+									className="text-white w-full"
+								>
 									{object.label}
 								</Button>
 							</DrawerTrigger>
