@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/drawer";
 
 import {
-	Card,
+	// Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
@@ -118,7 +118,6 @@ export default function AvatarCreate() {
 				if (avatar !== "") {
 					setAvatarInfo(JSON.parse(avatar));
 				}
-
 			} catch (err) {
 				console.error(err);
 				toast.error("ไม่สามารถยืนยันผู้ใช้งานได้");
@@ -133,145 +132,128 @@ export default function AvatarCreate() {
 	}, [avatarInfo]);
 
 	return (
-		<div className="flex flex-col w-full justify-center items-center">
-			<Card>
-				<CardHeader>
-					<div className="flex w-full space-x-2 items-center">
-						<Button
-							size={"icon"}
-							variant={"ghost"}
-							onClick={() => router.push("/home")}
-						>
-							<ChevronLeft />
-						</Button>
-						<CardTitle>ปรับแต่งต้นคริสต์มาสของคุณ</CardTitle>
-					</div>
-				</CardHeader>
-				<CardContent className="space-y-4">
-					<RenderChristmasTree
-						avatarInfo={avatarInfo}
-						trigger={trigger}
-					/>
-					<div className="flex w-full space-x-4">
-						{categories.map((object, key) => (
-							<Drawer key={key}>
-								<DrawerTrigger>
-									<Button variant={"outline"}>
-										{object.label}
-									</Button>
-								</DrawerTrigger>
-								<DrawerContent className="min-h-[70vh]">
-									<DrawerHeader>
-										<DrawerTitle>
-											{object.label}
-										</DrawerTitle>
-										<DrawerDescription>
-											เลือกได้เพียง 1 ชิ้น
-										</DrawerDescription>
-									</DrawerHeader>
-									<ScrollArea className="h-[300px] w-full rounded-md">
-										<ToggleGroup
-											type="single"
-											className="grid grid-cols-3 w-full gap-5"
-											onValueChange={(e) =>
-												setTempSelected(e)
-											}
-										>
-											<ToggleGroupItem
-												value={""}
-												key={key}
-												className="w-full h-full"
-											>
-												<h3>ไม่ใส่</h3>
-											</ToggleGroupItem>
-											{[
-												...Array(
-													object.totalAssets
-												).keys(),
-											]
-												.map(
-													(i) =>
-														object.relativePath +
-														object.prefixFileName +
-														(i + 1) +
-														object.fileExt
-												)
-												.map((imagePath, key) => {
-													return (
-														<ToggleGroupItem
-															value={
-																object.relativePath +
-																object.prefixFileName +
-																(
-																	key + 1
-																).toString() +
-																object.fileExt
-															}
-															key={key}
-															className="w-full h-full"
-														>
-															<Image
-																src={imagePath}
-																width={100}
-																height={100}
-																alt="custom"
-															/>
-														</ToggleGroupItem>
-													);
-												})}
-										</ToggleGroup>
-									</ScrollArea>
-									<DrawerFooter className="w-full">
-										<div className="w-full flex p-4 space-x-4">
-											<DrawerClose className="w-full">
-												<Button
-													variant="outline"
-													className="w-full"
-												>
-													ยกเลิก
-												</Button>
-											</DrawerClose>
-											<DrawerClose className="w-full">
-												<Button
-													className="w-full bg-green-600 hover:bg-green-700"
-													onClick={() => {
-														setAvatarInfo(
-															(prev) => {
-																const newCustom =
-																	prev;
-																newCustom[
-																	object.key
-																] =
-																	tempSelected;
-																console.log(
-																	newCustom
-																);
-																return newCustom;
-															}
-														);
-														setTrigger(
-															(prev) => !prev
-														);
-													}}
-												>
-													ยืนยัน
-												</Button>
-											</DrawerClose>
-										</div>
-									</DrawerFooter>
-								</DrawerContent>
-							</Drawer>
-						))}
-					</div>
+		<div>
+			<CardHeader>
+				<div className="flex w-full space-x-2 items-center text-white text-xl">
 					<Button
-						className="bg-green-600 hover:bg-green-700 w-full"
-						onClick={handleSaveInfo}
+						size={"icon"}
+						variant={"ghost"}
+						onClick={() => router.push("/home")}
 					>
-						บันทึก
+						<ChevronLeft />
 					</Button>
-				</CardContent>
-				<CardFooter></CardFooter>
-			</Card>
+					<CardTitle>ปรับแต่งต้นคริสต์มาสของคุณ</CardTitle>
+				</div>
+			</CardHeader>
+			<CardContent className="space-y-4">
+				<RenderChristmasTree
+					avatarInfo={avatarInfo}
+					trigger={trigger}
+				/>
+				<div className="flex w-full space-x-4">
+					{categories.map((object, key) => (
+						<Drawer key={key}>
+							<DrawerTrigger>
+								<Button variant={"ghost"} className="text-white">
+									{object.label}
+								</Button>
+							</DrawerTrigger>
+							<DrawerContent className="min-h-[70vh]">
+								<DrawerHeader>
+									<DrawerTitle>{object.label}</DrawerTitle>
+									<DrawerDescription>
+										เลือกได้เพียง 1 ชิ้น
+									</DrawerDescription>
+								</DrawerHeader>
+								<ScrollArea className="h-[300px] w-full rounded-md">
+									<ToggleGroup
+										type="single"
+										className="grid grid-cols-3 w-full gap-5"
+										onValueChange={(e) =>
+											setTempSelected(e)
+										}
+									>
+										<ToggleGroupItem
+											value={""}
+											key={key}
+											className="w-full h-full"
+										>
+											<h3>ไม่ใส่</h3>
+										</ToggleGroupItem>
+										{[...Array(object.totalAssets).keys()]
+											.map(
+												(i) =>
+													object.relativePath +
+													object.prefixFileName +
+													(i + 1) +
+													object.fileExt
+											)
+											.map((imagePath, key) => {
+												return (
+													<ToggleGroupItem
+														value={
+															object.relativePath +
+															object.prefixFileName +
+															(
+																key + 1
+															).toString() +
+															object.fileExt
+														}
+														key={key}
+														className="w-full h-full"
+													>
+														<Image
+															src={imagePath}
+															width={100}
+															height={100}
+															alt="custom"
+														/>
+													</ToggleGroupItem>
+												);
+											})}
+									</ToggleGroup>
+								</ScrollArea>
+								<DrawerFooter className="w-full">
+									<div className="w-full flex p-4 space-x-4">
+										<DrawerClose className="w-full">
+											<Button
+												variant="outline"
+												className="w-full"
+											>
+												ยกเลิก
+											</Button>
+										</DrawerClose>
+										<DrawerClose className="w-full">
+											<Button
+												className="w-full bg-green-600 hover:bg-green-700"
+												onClick={() => {
+													setAvatarInfo((prev) => {
+														const newCustom = prev;
+														newCustom[object.key] =
+															tempSelected;
+														console.log(newCustom);
+														return newCustom;
+													});
+													setTrigger((prev) => !prev);
+												}}
+											>
+												ยืนยัน
+											</Button>
+										</DrawerClose>
+									</div>
+								</DrawerFooter>
+							</DrawerContent>
+						</Drawer>
+					))}
+				</div>
+				<Button
+					className="bg-green-600 hover:bg-green-700 w-full"
+					onClick={handleSaveInfo}
+				>
+					บันทึก
+				</Button>
+			</CardContent>
+			<CardFooter></CardFooter>
 		</div>
 	);
 }

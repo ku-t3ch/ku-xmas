@@ -1,7 +1,7 @@
 "use client";
 
 import {
-	Card,
+	// Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
@@ -105,20 +105,22 @@ export default function CreateLink() {
 	}, [router]);
 
 	return (
-		<Card className="relative">
+		<div className="relative">
 			<CardHeader>
-				<div className="inline-flex justify-center items-center">
+				<div className="inline-flex justify-center items-center mb-8">
 					<Logo />
 				</div>
-				<CardTitle className="w-full inline-flex justify-center items-center space-x-4 text-2xl font-bold">
+				<CardTitle className="w-full inline-flex justify-center items-center space-x-4 text-2xl font-bold text-white">
 					มาสร้างเส้นทางมอบคำอวยพรให้คุณกัน ⭐
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="w-full flex flex-col items-center justify-center space-y-4">
-				<Label className="w-full text-left">ลิงก์ของคุณ</Label>
+				<Label className="w-full text-left text-white">
+					ลิงก์ของคุณ
+				</Label>
 				<div className="w-full flex space-x-2">
 					<Input
-						className="w-full truncate"
+						className="w-full truncate text-white"
 						value={
 							currentLink
 								? currentLink
@@ -195,6 +197,6 @@ export default function CreateLink() {
 					</AlertDialog>
 				)}
 			</CardFooter>
-		</Card>
+		</div>
 	);
 }

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import {
-	Card,
+	// Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -90,18 +90,15 @@ export default function Homepage() {
 	useEffect(() => {
 		console.log(userId);
 		setTrigger((prev) => !prev);
-	}, [avatarInfo]);
+	}, [avatarInfo, userId]);
 
 	return (
-		<Card>
+		<div>
 			<CardHeader className="relative">
-				<div className="absolute right-3 top-3">
+				<div className="absolute right-1 top-1">
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
-							<Button
-								variant={"outline"}
-								className="text-red-600 hover:text-red-600"
-							>
+							<Button variant={"ghost"} className="text-white">
 								<LogOut />
 								{/* ออกจากระบบ */}
 							</Button>
@@ -129,11 +126,11 @@ export default function Homepage() {
 						</AlertDialogContent>
 					</AlertDialog>
 				</div>
-				<div className="inline-flex justify-center items-center">
+				<div className="w-full flex justify-center pb-8">
 					<Logo />
 				</div>
-				<CardTitle className="w-full flex flex-col fjustify-center font-bold text-2xl mt-4">
-					สุขสันต์วันคริสต์มาสอีฟ มามอบคำอวยพรให้เพื่อน ๆ กันเถอะ!
+				<CardTitle className="w-full flex flex-col fjustify-center font-bold text-2xl mt-4 text-white">
+					สุขสันต์วันคริสต์มาสนะ มามอบคำอวยพรให้เพื่อน ๆ กันเถอะ!
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col items-center justify-center w-full space-y-2">
@@ -144,69 +141,25 @@ export default function Homepage() {
 							trigger={trigger}
 						/>
 					</Link>
-					<CardDescription className="absolute bottom-5 w-full text-center">
+					<CardDescription className="absolute bottom-5 w-full text-center text-white/80">
 						กดที่ต้นคริสต์มาสของคุณเพื่อดูคำอวยพรที่ส่งมา
 					</CardDescription>
 				</div>
-				{/* <Link href={"/message"}>
-						<Button
-							variant={"ghost"}
-							className="w-fit h-full bg-gradient-to-r from-white to-white"
-						>
-							<motion.div
-								className="w-32 h-32 mx-auto"
-								animate={{
-									rotate: [0, 15, -15, 10, -10, 0], // Shaking effect
-								}}
-								transition={{
-									duration: 0.6, // Total time for the shake
-									repeat: Infinity, // Infinite repeat
-									repeatType: "loop",
-									repeatDelay: 4,
-								}}
-							>
-								<Image
-									src="/image/christmas-box.webp"
-									alt="box"
-									width={200}
-									height={200}
-								/>
-							</motion.div>
-						</Button>
-					</Link>
-					<CardDescription>
-						เปิดกล่องของขวัญเพื่อดูคำอวยพร
-					</CardDescription> */}
 			</CardContent>
 			<CardFooter className="flex justify-end space-x-2">
-				<div className="sm:hidden flex w-full justify-center space-x-2">
-					<Link href={"/avatar"}>
-						<Button size={"sm"} variant={"outline"}>
+				<div className="flex w-full justify-end space-x-2">
+					<Link href={"/avatar"} className="w-full">
+						<Button variant={"outline"} className="w-full">
 							ปรับแต่งต้นคริสต์มาส
 						</Button>
 					</Link>
-					<Link href={"/create-link"}>
-						<Button
-							size={"sm"}
-							className="bg-green-600 hover:bg-green-700"
-						>
-							สร้างลิ้งค์ส่งคำอวยพร
-						</Button>
-					</Link>
-				</div>
-				<div className="hidden sm:flex w-full justify-end space-x-2">
-					<Link href={"/avatar"}>
-						<Button variant={"outline"}>
-							ปรับแต่งต้นคริสต์มาส
-						</Button>
-					</Link>
-					<Link href={"/create-link"}>
-						<Button className="bg-green-600 hover:bg-green-700">
+					<Link href={"/create-link"} className="w-full">
+						<Button className="bg-green-600 hover:bg-green-700 w-full">
 							สร้างลิ้งค์ส่งคำอวยพร
 						</Button>
 					</Link>
 				</div>
 			</CardFooter>
-		</Card>
+		</div>
 	);
 }

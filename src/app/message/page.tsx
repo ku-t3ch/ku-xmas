@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 
 import {
-	Card,
+	// Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -59,12 +59,12 @@ export default function RenderMessage() {
 	}, [reload, userId]);
 
 	return (
-		<Card className="absolute w-[325px] sm:max-w-[400px] sm:w-full">
+		<div className="absolute w-[325px] sm:max-w-[400px] sm:w-full h-[600px]">
 			<CardHeader>
-				<CardTitle className="sm:text-xl text-base font-bold">
+				<CardTitle className="sm:text-xl text-base font-bold text-white">
 					มาดูสิว่าใครส่งคำอวยพรมาให้คุณบ้าง 🎁
 				</CardTitle>
-				<CardDescription>
+				<CardDescription className="text-white/80">
 					{updatedAt ? (
 						<p>โหลดข้อมูลล่าสุดเมื่อ {updatedAt}</p>
 					) : (
@@ -83,15 +83,18 @@ export default function RenderMessage() {
 				) : (
 					<>
 						{messages.length > 0 ? (
-							<ScrollArea className="h-[400px] w-full rounded-md border">
-								<div className="w-full h-full flex flex-col gap-4 p-4">
+							<ScrollArea className="h-[400px] w-full rounded-md">
+								<div className="w-full h-full flex flex-col gap-4">
 									{messages.map((message) => (
-										<Card key={message.id}>
+										<div
+											key={message.id}
+											className="bg-white/10 backdrop-blur-md rounded-lg border"
+										>
 											<CardHeader>
-												<CardTitle className="text-[16px]">
+												<CardTitle className="text-[16px] text-white">
 													{message.senderName}
 												</CardTitle>
-												<CardDescription className="text-[12px]">
+												<CardDescription className="text-[12px] text-white/80">
 													ส่งเมื่อ{" "}
 													{new Date(
 														message.createdAt
@@ -99,11 +102,11 @@ export default function RenderMessage() {
 												</CardDescription>
 											</CardHeader>
 											<CardContent>
-												<article className="text-[14px]">
+												<article className="text-[14px] text-white">
 													{message.message}
 												</article>
 											</CardContent>
-										</Card>
+										</div>
 									))}
 								</div>
 							</ScrollArea>
@@ -119,32 +122,7 @@ export default function RenderMessage() {
 				)}
 			</CardContent>
 			<CardFooter>
-				<div className="sm:hidden inline-flex w-full justify-end space-x-2">
-					<Link href="/home" className="w-full">
-						<Button
-							className="w-full"
-							variant={"outline"}
-							size={"sm"}
-						>
-							กลับหน้าหลัก
-						</Button>
-					</Link>
-					{loading ? (
-						<Button className="w-full">
-							<Loader2 className="animate-spin" />
-							กำลังรีีเฟรช
-						</Button>
-					) : (
-						<Button
-							onClick={() => setReload(!reload)}
-							className="w-full bg-green-600 hover:bg-green-700"
-							size={"sm"}
-						>
-							รีเฟรช
-						</Button>
-					)}
-				</div>
-				<div className="hidden sm:inline-flex w-full justify-end space-x-2">
+				<div className="inline-flex w-full justify-end space-x-2">
 					<Link href="/home" className="w-full">
 						<Button className="w-full" variant={"outline"}>
 							กลับหน้าหลัก
@@ -165,6 +143,6 @@ export default function RenderMessage() {
 					)}
 				</div>
 			</CardFooter>
-		</Card>
+		</div>
 	);
 }
