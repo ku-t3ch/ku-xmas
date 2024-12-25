@@ -22,7 +22,7 @@ const notoSansThai = Noto_Sans_Thai({
 });
 
 export const metadata: Metadata = {
-	title: "KuTech Christmas Festival",
+	title: "KU TECH Christmas Festival",
 	description: "Celebrating the Joy of Christmas with Innovation and Magic",
 	icons: "/favicon.png"
 };
