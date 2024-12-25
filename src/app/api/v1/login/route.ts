@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import { signInFormSchema } from "@/lib/schema";
 import prisma from "../../../../../prisma/prismaProvider";
 import { lucia } from "@/lib/lucia";
+import { Scrypt } from "lucia";
 
 export async function POST(req: NextRequest) {
 	try {
@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
 		});
 		if (!user) throw new Error();
 
-		const result = await bcrypt.compare(password, user.password);
+		const script = new Scrypt();
+		const result = await script.verify(user.password, password);
 		if (!result) {
 			throw new Error();
 		}

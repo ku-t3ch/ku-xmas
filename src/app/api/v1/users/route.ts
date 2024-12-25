@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/prismaProvider";
-import { generateId } from "lucia";
+import { generateId, Scrypt } from "lucia";
 import { signUpFormSchema } from "@/lib/schema";
 
 export async function POST(req: NextRequest) {
@@ -30,7 +29,8 @@ export async function POST(req: NextRequest) {
 			);
 		} catch (_) {}
 
-		const hashedPassword = await bcrypt.hash(password, 10);
+		const script = new Scrypt();
+		const hashedPassword = await script.hash(password);
 		await prisma.user.create({
 			data: {
 				id: generateId(16),
