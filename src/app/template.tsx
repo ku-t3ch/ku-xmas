@@ -29,12 +29,19 @@ export default function MainTemplate({
 					🎄 Made by{" "}
 					<Link
 						href={"https://www.instagram.com/hotwasabisushi/"}
-						className="underline"
 						target="_blank"
 					>
 						Human
 					</Link>{" "}
-					on Earth 🎅
+					on{" "}
+					<Link
+						href={"https://tech.nisit.ku.ac.th/"}
+						target="_blank"
+						className="underline"
+					>
+						Earth
+					</Link>{" "}
+					🎅
 				</p>
 			</footer>
 		</>
